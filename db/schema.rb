@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170818193248) do
+ActiveRecord::Schema.define(version: 20170818194818) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,14 @@ ActiveRecord::Schema.define(version: 20170818193248) do
     t.string "description"
     t.string "photo_url"
     t.string "link_out"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.string "name"
+    t.string "title"
+    t.string "content"
+    t.bigint "museum_id"
+    t.index ["museum_id"], name: "index_reviews_on_museum_id"
   end
 
 end
