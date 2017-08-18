@@ -5,6 +5,8 @@ class MuseumsController < ApplicationController
   # GET /museums.json
   def index
     @museums = Museum.all
+
+    
   end
 
   # GET /museums/1
