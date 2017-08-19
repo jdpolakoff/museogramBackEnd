@@ -14,3 +14,10 @@ title_url = page.at_css('a')['href']
                  image URL: http://naturalhistory.si.edu/exhibits/#{image_url}
                  body: #{body}   }"
 end
+#
+# page = Nokogiri::HTML(open('https://www.instagram.com/explore/locations/378453/the-metropolitan-museum-of-art-new-york/'))
+# page.css('._4rbun') do |image|
+# img = page.css('img._2di5p')[":src"]
+#
+# puts "#{img}"
+# end
