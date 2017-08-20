@@ -12,6 +12,9 @@ class MuseumsController < ApplicationController
   # GET /museums/1
   # GET /museums/1.json
   def show
+    @museum = Museum.find(params[:id])
+
+    render json: @museum
   end
 
   # GET /museums/new
