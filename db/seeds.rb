@@ -24,3 +24,13 @@ medium: "Watercolor on ivory",
 on_display: false,
 museum: theMet
 )
+
+Artwork.create(name: "Faces no.10",
+artist: "Y.Z. Kami",
+date: "1992",
+thumbnail_url: "http://images.metmuseum.org/CRDImages/ma/web-additional/DP263547.jpg",
+img_url: "http://images.metmuseum.org/CRDImages/ma/web-large/DP263547.jpg",
+medium: "Oil on canvas",
+on_display: false,
+museum: theMet
+)
