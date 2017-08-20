@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 20170818194818) do
 
   create_table "artworks", force: :cascade do |t|
     t.string "name"
+    t.string "artist"
     t.string "date"
     t.string "description"
     t.string "thumbnail_url"

@@ -1,10 +1,9 @@
 Rails.application.routes.draw do
-  resources :museums do
-    resources :artworks
-  end
+  resources :museums
 
-  resources :museums do
-    resources :reviews
-  end 
+  resources :artworks
+
+  resources :reviews
+
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
