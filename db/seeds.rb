@@ -15,7 +15,7 @@ description: "The Metropolitan Museum of Art, colloquially 'the Met' is located 
 photo_url: "https://static.pexels.com/photos/69903/pexels-photo-69903.jpeg",
 link_out: "http://www.metmuseum.org/")
 
-Artwork.create(name: "Portrait of a Lady",
+lady = Artwork.create(name: "Portrait of a Lady",
 artist: "Henry Inman",
 date: "ca. 1820",
 thumbnail_url: "http://images.metmuseum.org/CRDImages/ap/web-additional/ap25.178.5.jpg",
@@ -43,4 +43,10 @@ img_url: "http://images.metmuseum.org/CRDImages/ma/web-large/DP263547.jpg",
 medium: "Oil on canvas",
 on_display: false,
 museum: theMet
+)
+
+lady.reviews.create(
+name: 'Joey',
+title: 'Best painting ever',
+content: 'JK SUCKS'
 )

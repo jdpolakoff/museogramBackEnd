@@ -13,7 +13,8 @@ class ArtworksController < ApplicationController
   # GET /artworks/1.json
   def show
     @artwork = Artwork.find(params[:id])
-    render json: @artwork
+    @reviews = @artwork.reviews
+    render :json => @artwork.to_json(:include => :reviews)
   end
 
 
