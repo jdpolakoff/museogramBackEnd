@@ -4,7 +4,7 @@ class CreateReviews < ActiveRecord::Migration[5.1]
       t.string :name
       t.string :title
       t.string :content
-      t.references :museum
+      t.references :artwork
     end
   end
 end

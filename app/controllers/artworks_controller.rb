@@ -13,7 +13,6 @@ class ArtworksController < ApplicationController
   # GET /artworks/1.json
   def show
     @artwork = Artwork.find(params[:id])
-
     render json: @artwork
   end
 

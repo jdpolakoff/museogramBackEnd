@@ -40,8 +40,8 @@ ActiveRecord::Schema.define(version: 20170818194818) do
     t.string "name"
     t.string "title"
     t.string "content"
-    t.bigint "museum_id"
-    t.index ["museum_id"], name: "index_reviews_on_museum_id"
+    t.bigint "artwork_id"
+    t.index ["artwork_id"], name: "index_reviews_on_artwork_id"
   end
 
 end

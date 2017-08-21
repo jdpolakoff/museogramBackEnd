@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
   resources :museums
-
   resources :artworks
 
   resources :reviews
