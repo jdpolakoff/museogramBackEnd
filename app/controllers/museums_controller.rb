@@ -13,7 +13,7 @@ class MuseumsController < ApplicationController
   def show
     @museum = Museum.find(params[:id])
     @artworks = @museum.artworks
-    render :json => @museum.to_json(:include => :artworks)
+    render :json => @museum.to_json(:include => {:artworks => {:include => :reviews}})
   end
 
   private
