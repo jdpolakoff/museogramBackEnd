@@ -21,6 +21,7 @@ link_out: "http://www.metmuseum.org/")
 # queries.each do |query|
   artwork_data = HTTParty.get("http://www.metmuseum.org/api/collection/collectionlisting?artist=&department=&era=&geolocation=&material=Paintings&offset=0&pageSize=0&perPage=100&showOnly=&sortBy=Relevance&sortOrder=asc")
   artwork_data["results"].each do |artwork|
+    if artwork["image"].start_with?("http")
     new_artwork = Artwork.create!(
     name: artwork["title"],
     artist: artwork["description"],
@@ -32,10 +33,12 @@ link_out: "http://www.metmuseum.org/")
     museum: theMet
     )
   end
+end
 # end
 
 artwork_data = HTTParty.get("http://www.metmuseum.org/api/collection/collectionlisting?artist=&department=&era=&geolocation=&material=Sculpture&offset=0&pageSize=0&perPage=100&showOnly=&sortBy=Relevance&sortOrder=asc")
 artwork_data["results"].each do |artwork|
+  if artwork["image"].start_with?("http")
   new_artwork = Artwork.create!(
   name: artwork["title"],
   artist: artwork["description"],
@@ -47,9 +50,11 @@ artwork_data["results"].each do |artwork|
   museum: theMet
   )
 end
+end 
 
 artwork_data = HTTParty.get("http://www.metmuseum.org/api/collection/collectionlisting?artist=&department=&era=&geolocation=&material=Drawings&offset=0&pageSize=0&perPage=100&showOnly=&sortBy=Relevance&sortOrder=asc")
 artwork_data["results"].each do |artwork|
+  if artwork["image"].start_with?("http")
   new_artwork = Artwork.create!(
   name: artwork["title"],
   artist: artwork["description"],
@@ -60,4 +65,5 @@ artwork_data["results"].each do |artwork|
   category: "drawing",
   museum: theMet
   )
+end
 end
