@@ -8,6 +8,9 @@
 
 Museum.destroy_all
 Artwork.destroy_all
+Review.destroy_all
+
+# queries = ['Paintings', 'Sculptures', 'Drawings']
 
 theMet = Museum.create(name: "Metropolitan Museum of Art",
 address: "1000 5th Ave, New York, NY 10028",
@@ -15,38 +18,46 @@ description: "The Metropolitan Museum of Art, colloquially 'the Met' is located 
 photo_url: "https://static.pexels.com/photos/69903/pexels-photo-69903.jpeg",
 link_out: "http://www.metmuseum.org/")
 
-lady = Artwork.create(name: "Portrait of a Lady",
-artist: "Henry Inman",
-date: "ca. 1820",
-thumbnail_url: "http://images.metmuseum.org/CRDImages/ap/web-additional/ap25.178.5.jpg",
-img_url: "http://images.metmuseum.org/CRDImages/ap/mobile-large/ap25.178.5.jpg",
-medium: "Watercolor on ivory",
-on_display: false,
-museum: theMet
-)
+# queries.each do |query|
+  artwork_data = HTTParty.get("http://www.metmuseum.org/api/collection/collectionlisting?artist=&department=&era=&geolocation=&material=Paintings&offset=0&pageSize=0&perPage=100&showOnly=&sortBy=Relevance&sortOrder=asc")
+  artwork_data["results"].each do |artwork|
+    new_artwork = Artwork.create!(
+    name: artwork["title"],
+    artist: artwork["description"],
+    date: artwork["date"],
+    img_url: artwork["image"],
+    medium: artwork["medium"],
+    on_display: artwork["galleryInformation"],
+    category: "painting",
+    museum: theMet
+    )
+  end
+# end
 
-Artwork.create(name: "Faces no.10",
-artist: "Y.Z. Kami",
-date: "1992",
-thumbnail_url: "http://images.metmuseum.org/CRDImages/ma/web-additional/DP263547.jpg",
-img_url: "http://images.metmuseum.org/CRDImages/ma/web-large/DP263547.jpg",
-medium: "Oil on canvas",
-on_display: false,
-museum: theMet
-)
+artwork_data = HTTParty.get("http://www.metmuseum.org/api/collection/collectionlisting?artist=&department=&era=&geolocation=&material=Sculpture&offset=0&pageSize=0&perPage=100&showOnly=&sortBy=Relevance&sortOrder=asc")
+artwork_data["results"].each do |artwork|
+  new_artwork = Artwork.create!(
+  name: artwork["title"],
+  artist: artwork["description"],
+  date: artwork["date"],
+  img_url: artwork["image"],
+  medium: artwork["medium"],
+  on_display: artwork["galleryInformation"],
+  category: "sculpture",
+  museum: theMet
+  )
+end
 
-Artwork.create(name: "third artwork",
-artist: "Y.Z. Kami",
-date: "1992",
-thumbnail_url: "http://images.metmuseum.org/CRDImages/ma/web-additional/DP263547.jpg",
-img_url: "http://images.metmuseum.org/CRDImages/ma/web-large/DP263547.jpg",
-medium: "Oil on canvas",
-on_display: false,
-museum: theMet
-)
-
-lady.reviews.create(
-name: 'Joey',
-title: 'Best painting ever',
-content: 'JK SUCKS'
-)
+artwork_data = HTTParty.get("http://www.metmuseum.org/api/collection/collectionlisting?artist=&department=&era=&geolocation=&material=Drawings&offset=0&pageSize=0&perPage=100&showOnly=&sortBy=Relevance&sortOrder=asc")
+artwork_data["results"].each do |artwork|
+  new_artwork = Artwork.create!(
+  name: artwork["title"],
+  artist: artwork["description"],
+  date: artwork["date"],
+  img_url: artwork["image"],
+  medium: artwork["medium"],
+  on_display: artwork["galleryInformation"],
+  category: "drawing",
+  museum: theMet
+  )
+end

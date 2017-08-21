@@ -4,12 +4,11 @@ class CreateArtworks < ActiveRecord::Migration[5.1]
       t.string :name
       t.string :artist
       t.string :date
-      t.string :description
-      t.string :thumbnail_url
       t.string :img_url
       t.string :medium
-      t.boolean :on_display
+      t.string :on_display
       t.references :museum
+      t.string :category
     end
   end
 end
