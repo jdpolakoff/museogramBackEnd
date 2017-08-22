@@ -15,13 +15,9 @@ require "net/http"
 def url_exist?(url_string)
   url = URI.parse(url_string)
   req = Net::HTTP.new(url.host, url.port)
-  path = url.path if url.path.present?
-  res = req.request_head(path || '/')
-  res.code != "404" # false if returns 404 - not found
-rescue Errno::ENOENT
-  false # false if can't find the server
+  res = req.request_head(url.path)
+  return res.code
 end
-
 queries = ['Paintings', 'Sculptures', 'Drawings']
 
 theMet = Museum.create(name: "Metropolitan Museum of Art",
@@ -34,19 +30,21 @@ queries.each do |query|
   puts query
   artwork_data = HTTParty.get("https://www.metmuseum.org/api/collection/collectionlisting?artist=&department=&era=&geolocation=&material=#{query}&offset=0&pageSize=0&perPage=100&showOnly=&sortBy=Relevance&sortOrder=asc")
   artwork_data["results"].each do |artwork|
-    if !artwork["image"].start_with?("http")
-        next
-      else
-        new_artwork = Artwork.create!(
-        name: artwork["title"],
-        artist: artwork["description"],
-        date: artwork["date"],
-        img_url: artwork["image"],
-        medium: artwork["medium"],
-        on_display: artwork["galleryInformation"],
-        category: query,
-        museum: theMet
-        )
-    end
+    if url_exist?(artwork["image"]) == "200"
+      if !artwork["image"].start_with?("http")
+          next
+        else
+          new_artwork = Artwork.create!(
+          name: artwork["title"],
+          artist: artwork["description"],
+          date: artwork["date"],
+          img_url: artwork["image"],
+          medium: artwork["medium"],
+          on_display: artwork["galleryInformation"],
+          category: query,
+          museum: theMet
+          )
+        end
+  end
 end
 end
