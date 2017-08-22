@@ -30,7 +30,7 @@ queries.each do |query|
   puts query
   artwork_data = HTTParty.get("https://www.metmuseum.org/api/collection/collectionlisting?artist=&department=&era=&geolocation=&material=#{query}&offset=0&pageSize=0&perPage=100&showOnly=&sortBy=Relevance&sortOrder=asc")
   artwork_data["results"].each do |artwork|
-    if url_exist?(artwork["image"]) == "200"
+    # if url_exist?(artwork["image"]) == "200"
       if !artwork["image"].start_with?("http")
           next
         else
@@ -47,4 +47,4 @@ queries.each do |query|
         end
   end
 end
-end
+# end
