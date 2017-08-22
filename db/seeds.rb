@@ -44,7 +44,7 @@ queries.each do |query|
           category: query,
           museum: theMet
           )
-        end
-  end
+      end
+    # end
 end
 # end
