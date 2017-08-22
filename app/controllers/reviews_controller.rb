@@ -10,6 +10,8 @@ class ReviewsController < ApplicationController
   # GET /reviews/1
   # GET /reviews/1.json
   def show
+    @review = Review.find(params[:id])
+    render json: @review
   end
 
   def new
