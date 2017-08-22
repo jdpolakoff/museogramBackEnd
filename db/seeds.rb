@@ -18,8 +18,10 @@ description: "The Metropolitan Museum of Art, colloquially 'the Met' is located 
 photo_url: "https://static.pexels.com/photos/69903/pexels-photo-69903.jpeg",
 link_out: "http://www.metmuseum.org/")
 
+5.times do
 # queries.each do |query|
-  artwork_data = HTTParty.get("http://www.metmuseum.org/api/collection/collectionlisting?artist=&department=&era=&geolocation=&material=Paintings&offset=0&pageSize=0&perPage=100&showOnly=&sortBy=Relevance&sortOrder=asc")
+  num = 1
+  artwork_data = HTTParty.get("http://www.metmuseum.org/api/collection/collectionlisting?artist=&department=&era=&geolocation=&offset=0&pageSize=0&perPage=100&showOnly=&sortBy=Relevance&sortOrder=asc&page=#{num}")
   artwork_data["results"].each do |artwork|
     if artwork["image"].start_with?("http")
     new_artwork = Artwork.create!(
@@ -33,37 +35,38 @@ link_out: "http://www.metmuseum.org/")
     museum: theMet
     )
   end
+  num += 1
 end
 # end
 
-artwork_data = HTTParty.get("http://www.metmuseum.org/api/collection/collectionlisting?artist=&department=&era=&geolocation=&material=Sculpture&offset=0&pageSize=0&perPage=100&showOnly=&sortBy=Relevance&sortOrder=asc")
-artwork_data["results"].each do |artwork|
-  if artwork["image"].start_with?("http")
-  new_artwork = Artwork.create!(
-  name: artwork["title"],
-  artist: artwork["description"],
-  date: artwork["date"],
-  img_url: artwork["image"],
-  medium: artwork["medium"],
-  on_display: artwork["galleryInformation"],
-  category: "sculpture",
-  museum: theMet
-  )
-end
-end 
-
-artwork_data = HTTParty.get("http://www.metmuseum.org/api/collection/collectionlisting?artist=&department=&era=&geolocation=&material=Drawings&offset=0&pageSize=0&perPage=100&showOnly=&sortBy=Relevance&sortOrder=asc")
-artwork_data["results"].each do |artwork|
-  if artwork["image"].start_with?("http")
-  new_artwork = Artwork.create!(
-  name: artwork["title"],
-  artist: artwork["description"],
-  date: artwork["date"],
-  img_url: artwork["image"],
-  medium: artwork["medium"],
-  on_display: artwork["galleryInformation"],
-  category: "drawing",
-  museum: theMet
-  )
-end
+# artwork_data = HTTParty.get("http://www.metmuseum.org/api/collection/collectionlisting?artist=&department=&era=&geolocation=&material=Sculpture&offset=0&pageSize=0&perPage=100&showOnly=&sortBy=Relevance&sortOrder=asc")
+# artwork_data["results"].each do |artwork|
+#   if artwork["image"].start_with?("http")
+#   new_artwork = Artwork.create!(
+#   name: artwork["title"],
+#   artist: artwork["description"],
+#   date: artwork["date"],
+#   img_url: artwork["image"],
+#   medium: artwork["medium"],
+#   on_display: artwork["galleryInformation"],
+#   category: "sculpture",
+#   museum: theMet
+#   )
+# end
+# end
+#
+# artwork_data = HTTParty.get("http://www.metmuseum.org/api/collection/collectionlisting?artist=&department=&era=&geolocation=&material=Drawings&offset=0&pageSize=0&perPage=100&showOnly=&sortBy=Relevance&sortOrder=asc")
+# artwork_data["results"].each do |artwork|
+#   if artwork["image"].start_with?("http")
+#   new_artwork = Artwork.create!(
+#   name: artwork["title"],
+#   artist: artwork["description"],
+#   date: artwork["date"],
+#   img_url: artwork["image"],
+#   medium: artwork["medium"],
+#   on_display: artwork["galleryInformation"],
+#   category: "drawing",
+#   museum: theMet
+#   )
+# end
 end
