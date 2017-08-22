@@ -10,7 +10,19 @@ Museum.destroy_all
 Artwork.destroy_all
 Review.destroy_all
 
-# queries = ['Paintings', 'Sculptures', 'Drawings']
+# I found this option for checking if our images actually exist before adding them to our database. Will play more with this tomorrow
+require "net/http"
+def url_exist?(url_string)
+  url = URI.parse(url_string)
+  req = Net::HTTP.new(url.host, url.port)
+  path = url.path if url.path.present?
+  res = req.request_head(path || '/')
+  res.code != "404" # false if returns 404 - not found
+rescue Errno::ENOENT
+  false # false if can't find the server
+end
+
+queries = ['Paintings', 'Sculptures', 'Drawings']
 
 theMet = Museum.create(name: "Metropolitan Museum of Art",
 address: "1000 5th Ave, New York, NY 10028",
@@ -18,52 +30,23 @@ description: "The Metropolitan Museum of Art, colloquially 'the Met' is located 
 photo_url: "https://static.pexels.com/photos/69903/pexels-photo-69903.jpeg",
 link_out: "http://www.metmuseum.org/")
 
-# queries.each do |query|
-  artwork_data = HTTParty.get("http://www.metmuseum.org/api/collection/collectionlisting?artist=&department=&era=&geolocation=&material=Paintings&offset=0&pageSize=0&perPage=100&showOnly=&sortBy=Relevance&sortOrder=asc")
+queries.each do |query|
+  puts query
+  artwork_data = HTTParty.get("https://www.metmuseum.org/api/collection/collectionlisting?artist=&department=&era=&geolocation=&material=#{query}&offset=0&pageSize=0&perPage=100&showOnly=&sortBy=Relevance&sortOrder=asc")
   artwork_data["results"].each do |artwork|
-    if artwork["image"].start_with?("http")
-    new_artwork = Artwork.create!(
-    name: artwork["title"],
-    artist: artwork["description"],
-    date: artwork["date"],
-    img_url: artwork["image"],
-    medium: artwork["medium"],
-    on_display: artwork["galleryInformation"],
-    category: "painting",
-    museum: theMet
-    )
-  end
-end
-# end
-
-artwork_data = HTTParty.get("http://www.metmuseum.org/api/collection/collectionlisting?artist=&department=&era=&geolocation=&material=Sculpture&offset=0&pageSize=0&perPage=100&showOnly=&sortBy=Relevance&sortOrder=asc")
-artwork_data["results"].each do |artwork|
-  if artwork["image"].start_with?("http")
-  new_artwork = Artwork.create!(
-  name: artwork["title"],
-  artist: artwork["description"],
-  date: artwork["date"],
-  img_url: artwork["image"],
-  medium: artwork["medium"],
-  on_display: artwork["galleryInformation"],
-  category: "sculpture",
-  museum: theMet
-  )
-end
-end 
-
-artwork_data = HTTParty.get("http://www.metmuseum.org/api/collection/collectionlisting?artist=&department=&era=&geolocation=&material=Drawings&offset=0&pageSize=0&perPage=100&showOnly=&sortBy=Relevance&sortOrder=asc")
-artwork_data["results"].each do |artwork|
-  if artwork["image"].start_with?("http")
-  new_artwork = Artwork.create!(
-  name: artwork["title"],
-  artist: artwork["description"],
-  date: artwork["date"],
-  img_url: artwork["image"],
-  medium: artwork["medium"],
-  on_display: artwork["galleryInformation"],
-  category: "drawing",
-  museum: theMet
-  )
+    if !artwork["image"].start_with?("http")
+        next
+      else
+        new_artwork = Artwork.create!(
+        name: artwork["title"],
+        artist: artwork["description"],
+        date: artwork["date"],
+        img_url: artwork["image"],
+        medium: artwork["medium"],
+        on_display: artwork["galleryInformation"],
+        category: query,
+        museum: theMet
+        )
+    end
 end
 end
