@@ -22,4 +22,5 @@ class MuseumsController < ApplicationController
     def museum_params
       params.fetch(:museum, {})
     end
+
 end
