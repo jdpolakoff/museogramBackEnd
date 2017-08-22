@@ -5,6 +5,7 @@ class ReviewsController < ApplicationController
   # GET /reviews.json
   def index
     @reviews = Review.all
+    render json: @reviews
   end
 
   # GET /reviews/1
@@ -14,42 +15,15 @@ class ReviewsController < ApplicationController
     render json: @review
   end
 
-  def new
-      @review = Review.new
+  def create
+      @review = Review.create!(reviews_params)
        render json: @review
   end
-
-    def edit
-       @artwork = Artwork.find(params[:artwork_id])
-       @review = Review.find(params[:id])
-       render json: @review
-    end
-
-
-    def create
-        @artwork = Artwork.find(params[:artwork_id])
-        @review = @artwork.reviews.build(params[:id])
-         render json: @review
-    end
-
-    def update
-    @artwork = Artwork.find(params[:artwork_id])
-    @review = @artwork.reviews.find(params[:id])
-     render json: @review
-   end
-
-    def destroy
-        @artwork = Artwork.find(params[:artwork_id])
-        @review = @artwork.reviews.find(params[:id])
-        @review.destroy
-
-    end
 
 
   private
     # Never trust parameters from the scary internet, only allow the white list through.
     def reviews_params
-      params.require(:review).permit(:name, :title, :content)
-
+      params.require(:review).permit(:name, :title, :content, :artwork_id)
     end
 end

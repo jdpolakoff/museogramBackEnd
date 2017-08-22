@@ -20,7 +20,4 @@ class ArtworksController < ApplicationController
 
   private
     # Never trust parameters from the scary internet, only allow the white list through.
-    def reviews_params
-      params.fetch(:artwork, {})
-    end
 end
