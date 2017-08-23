@@ -13,7 +13,7 @@ module MuseogramBackEnd
 
     config.middleware.insert_before 0, Rack::Cors do
       allow do
-        origins '*'
+        origins '*', 'https://jdpolakoff.github.io/museogramFrontEnd/'
         resource '*', :headers => :any, :methods => [:get, :post, :options]
       end
     end
