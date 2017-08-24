@@ -22,7 +22,7 @@ def url_exist?(url_string)
   return res.code
 end
 
-queries = ['Paintings', 'Sculptures', 'Drawings', 'Jewelry', 'Baseball cards', 'Pottery', 'Watercolor', 'Drinking vessels', 'Dresses', 'Glass', 'Paper', 'Porcelain', 'Musical instruments', 'Wood', 'Swords', 'Gold']
+queries = ['Paintings', 'Sculpture', 'Drawings', 'Jewelry', 'Baseball cards', 'Pottery', 'Watercolor', 'Drinking vessels', 'Dresses', 'Glass', 'Paper', 'Porcelain', 'Musical instruments', 'Wood', 'Swords', 'Gold']
 
 theMet = Museum.create(name: "Metropolitan Museum of Art",
 address: "1000 5th Ave, New York, NY 10028",
@@ -34,7 +34,7 @@ link_out: "http://www.metmuseum.org/")
 queries.each do |query|
   num = 0
   puts query
-  5.times do
+  1.times do
     num += 100
     puts num
     artwork_data = HTTParty.get("https://www.metmuseum.org/api/collection/collectionlisting?artist=&department=&era=&geolocation=&material=#{query}&offset=#{num}&pageSize=0&perPage=100&showOnly=&sortBy=Relevance&sortOrder=asc")
