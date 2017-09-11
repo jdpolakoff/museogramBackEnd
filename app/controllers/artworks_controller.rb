@@ -4,7 +4,31 @@ class ArtworksController < ApplicationController
   # GET /artworks
   # GET /artworks.json
   def index
-    @artworks = Artwork.all
+    museum_id = params[:museum_id].to_i
+
+    if museum_id > 0
+      # page size
+      limit = params[:limit].to_i
+      limit = 25 if limit == 0
+
+      # records to skip before page
+      offset = params[:offset].to_i
+
+      # direction of results
+      order = if params[:sortType].to_s.upcase == "DESC"
+        "DESC"
+      else
+        # Default Ascending order
+        "ASC"
+      end
+
+      @artworks = Artwork.where(museum_id: museum_id)
+        .limit(limit)
+        .offset(offset)
+        .order("id #{order}")
+    else
+      @artworks = Artwork.all
+    end
 
     render json: @artworks
   end
